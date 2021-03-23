@@ -12,6 +12,10 @@ def apiRoot():
 def apiJson():
   return {"gpio": readPins(config["pinMap"])}
 
+@route('/json/<thisPin:int>')
+def apiJsonPin(thisPin):
+  return {"gpio": [next((p for p in readPins(config["pinMap"]) if p.get('input') == thisPin), {})]}
+
 # GPIO processing
 def readPins(pinMap):
   for pin in pinMap:
